@@ -232,6 +232,13 @@
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
 
+     if (!groupKey) {
+        showMessage('Bitte gebt eine gültige Gruppennummer ein.', 'warn');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'senden';
+        return;
+      }
+
       const payload = {
         lessonCode,
         groupName,
