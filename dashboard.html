@@ -134,6 +134,10 @@
       text-align: left;
       vertical-align: top;
     }
+    thead th:nth-child(4),
+    tbody td:nth-child(4) {
+      border-left: 2px solid #111827;
+    }
     thead th {
       text-align: center;
     }
@@ -149,9 +153,6 @@
       .chart {
         height: 300px;
       }
-    }
-    td.separator, th.separator {
-      border-left: 2px solid #111827;
     }
   </style>
 </head>
@@ -191,12 +192,12 @@
           <tr>
             <th rowspan="2">Gruppennummer</th>
             <th colspan="2">Beutel 1</th>
-            <th colspan="2" class="separator">Beutel 2</th>
+            <th colspan="2">Beutel 2</th>
           </tr>
           <tr>
             <th>Blau</th>
             <th>Gelb</th>
-            <th class="separator">Blau</th>
+            <th>Blau</th>
             <th>Gelb</th>
           </tr>
         </thead>
@@ -280,7 +281,7 @@
             <td>${group.groupName || '–'}</td>
             <td>${counts['1'] || 0}</td>
             <td>${counts['2'] || 0}</td>
-            <td class="separator">${counts['3'] || 0}</td>
+            <td>${counts['3'] || 0}</td>
             <td>${counts['4'] || 0}</td>
           `;
           groupsBody.appendChild(tr);
