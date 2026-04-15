@@ -127,39 +127,29 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 12px;
+      table-layout: fixed;
     }
-   th, td {
-  border-bottom: 1px solid var(--border);
-  padding: 10px 8px;
-  vertical-align: top;
-}
-
-/* Überschriften zentriert */
-thead th {
-  text-align: center;
-}
-
-/* Zahlen zentriert */
-tbody td {
-  text-align: center;
-}
-
-/* Erste Spalte (Gruppennummer) links */
-tbody td:first-child,
-thead th:first-child {
-  text-align: left;
-}
-    thead th:nth-child(3),
-    tbody td:nth-child(4) {
-      border-left: 2px solid #111827;
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 8px;
+      vertical-align: top;
     }
     thead th {
       text-align: center;
     }
-    thead th:first-child,
-    tbody td:first-child {
+    tbody td {
+      text-align: center;
+    }
+    tbody td:first-child,
+    thead th:first-child {
       text-align: left;
     }
+    thead tr:first-child th:nth-child(3),
+    thead tr:nth-child(2) th:nth-child(3),
+    tbody td:nth-child(4) {
+      border-left: 2px solid #111827;
+    }
+
     .small { color: var(--muted); }
 
     @media (max-width: 800px) {
@@ -203,6 +193,13 @@ thead th:first-child {
     <div class="card">
       <h2>Ergebnisse der Gruppen</h2>
       <table>
+        <colgroup>
+          <col style="width: 38%;">
+          <col style="width: 15.5%;">
+          <col style="width: 15.5%;">
+          <col style="width: 15.5%;">
+          <col style="width: 15.5%;">
+        </colgroup>
         <thead>
           <tr>
             <th rowspan="2">Gruppennummer</th>
