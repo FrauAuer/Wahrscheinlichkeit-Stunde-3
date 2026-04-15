@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wie oft ziehst du welche Farbe?</title>
+  <style>
+    :root {
+      --bg: #f4f6fa;
+      --card: #ffffff;
+      --border: #d1d5db;
+      --text: #111827;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+    }
+    h1, h2, h3 { margin-top: 0; }
+    .row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: end;
+    }
+    .field { min-width: 240px; flex: 1; }
+    label { display: block; margin-bottom: 6px; font-weight: 700; }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+    }
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #111827;
+      color: white;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 12px;
+    }
+    .stat {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .stat .label { color: var(--muted); font-size: 0.95rem; }
+    .stat .value { font-size: 1.8rem; font-weight: 700; margin-top: 6px; }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .chart-box {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #f9fafb;
+    }
+    .chart-title {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .chart {
+      height: 360px;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 24px;
+      padding: 16px 8px 8px;
+      border-bottom: 2px solid #111827;
+    }
+    .bar-wrap {
+      flex: 0 1 140px;
+      max-width: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      gap: 8px;
+      height: 100%;
+    }
+    .bar-value { font-weight: 700; min-height: 24px; }
+    .bar {
+      width: 100%;
+      min-height: 2px;
+      border-radius: 12px 12px 0 0;
+    }
+    .bar.blue {
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+    }
+    .bar.yellow {
+      background: linear-gradient(180deg, #fde047, #eab308);
+    }
+    .bar-label { font-weight: 700; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead th {
+      text-align: center;
+    }
+    thead th:first-child,
+    tbody td:first-child {
+      text-align: left;
+    }
+    .small { color: var(--muted); }
+
+    @media (max-width: 800px) {
+      .stats { grid-template-columns: 1fr; }
+      .charts-grid { grid-template-columns: 1fr; }
+      .chart {
+        height: 300px;
+      }
+    }
+    td.separator, th.separator {
+      border-left: 2px solid #111827;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Wie oft ziehst du welche Farbe?</h1>
+      <div class="row">
+        <div class="field">
+          <label for="lessonCode">Passwort</label>
+          <input id="lessonCode" type="text" placeholder="33" />
+        </div>
+        <div>
+          <button id="loadBtn">anzeigen</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Unsere Ergebnisse als Säulendiagramme</h2>
+      <div class="charts-grid">
+        <div class="chart-box">
+          <div class="chart-title">Beutel 1</div>
+          <div class="chart" id="chartBag1"></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-title">Beutel 2</div>
+          <div class="chart" id="chartBag2"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ergebnisse der Gruppen</h2>
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2">Gruppennummer</th>
+            <th colspan="2">Beutel 1</th>
+            <th colspan="2" class="separator">Beutel 2</th>
+          </tr>
+          <tr>
+            <th>Blau</th>
+            <th>Gelb</th>
+            <th class="separator">Blau</th>
+            <th>Gelb</th>
+          </tr>
+        </thead>
+        <tbody id="groupsBody"></tbody>
+      </table>
+      <p class="small" id="emptyText">Noch keine Eingaben vorhanden.</p>
+    </div>
+
+    <div class="card">
+      <div class="stats">
+        <div class="stat">
+          <div class="label">Anzahl der Gruppen</div>
+          <div class="value" id="groupCount">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db } from './firebase-config.js';
+    import { ref, onValue, off } from 'https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js';
+
+    const lessonCodeInput = document.getElementById('lessonCode');
+    const loadBtn = document.getElementById('loadBtn');
+    const groupCount = document.getElementById('groupCount');
+    const chartBag1 = document.getElementById('chartBag1');
+    const chartBag2 = document.getElementById('chartBag2');
+    const groupsBody = document.getElementById('groupsBody');
+    const emptyText = document.getElementById('emptyText');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    lessonCodeInput.value = urlParams.get('lesson') || '';
+
+    let currentRef = null;
+    let currentCallback = null;
+
+    function createBar(value, labelText, colorClass, max) {
+      const wrap = document.createElement('div');
+      wrap.className = 'bar-wrap';
+
+      const valueLabel = document.createElement('div');
+      valueLabel.className = 'bar-value';
+      valueLabel.textContent = value;
+
+      const bar = document.createElement('div');
+      bar.className = `bar ${colorClass}`;
+      bar.style.height = `${(value / max) * 250 + 6}px`;
+
+      const label = document.createElement('div');
+      label.className = 'bar-label';
+      label.textContent = labelText;
+
+      wrap.appendChild(valueLabel);
+      wrap.appendChild(bar);
+      wrap.appendChild(label);
+      return wrap;
+    }
+
+    function renderCharts(totals) {
+      chartBag1.innerHTML = '';
+      chartBag2.innerHTML = '';
+
+      const max = Math.max(...totals, 1);
+
+      chartBag1.appendChild(createBar(totals[0], 'Blau', 'blue', max));
+      chartBag1.appendChild(createBar(totals[1], 'Gelb', 'yellow', max));
+      chartBag2.appendChild(createBar(totals[2], 'Blau', 'blue', max));
+      chartBag2.appendChild(createBar(totals[3], 'Gelb', 'yellow', max));
+    }
+
+    function renderTable(groups) {
+      groupsBody.innerHTML = '';
+      emptyText.style.display = groups.length ? 'none' : 'block';
+
+      groups
+        .sort((a, b) => (a.groupName || '').localeCompare(b.groupName || '', 'de'))
+        .forEach(group => {
+          const tr = document.createElement('tr');
+          const counts = group.counts || {};
+          tr.innerHTML = `
+            <td>${group.groupName || '–'}</td>
+            <td>${counts['1'] || 0}</td>
+            <td>${counts['2'] || 0}</td>
+            <td class="separator">${counts['3'] || 0}</td>
+            <td>${counts['4'] || 0}</td>
+          `;
+          groupsBody.appendChild(tr);
+        });
+    }
+
+    function loadLesson() {
+      const lessonCode = lessonCodeInput.value.trim().toLowerCase();
+      if (!lessonCode) return;
+
+      if (currentRef && currentCallback) {
+        off(currentRef, 'value', currentCallback);
+      }
+
+      currentRef = ref(db, `Stunde3/${lessonCode}/groups`);
+      currentCallback = (snapshot) => {
+        const data = snapshot.val() || {};
+        const groups = Object.values(data);
+
+        const totals = [0, 0, 0, 0];
+        groups.forEach(group => {
+          const counts = group.counts || {};
+          for (let i = 1; i <= 4; i++) {
+            totals[i - 1] += Number(counts[String(i)] || 0);
+          }
+        });
+
+        groupCount.textContent = groups.length;
+        renderCharts(totals);
+        renderTable(groups);
+      };
+
+      onValue(currentRef, currentCallback);
+    }
+
+    loadBtn.addEventListener('click', loadLesson);
+    if (lessonCodeInput.value.trim()) {
+      loadLesson();
+    } else {
+      renderCharts([0, 0, 0, 0]);
+    }
+  </script>
+</body>
+</html>
