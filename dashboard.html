@@ -210,10 +210,10 @@ thead th:first-child {
             <th colspan="2">Beutel 2</th>
           </tr>
           <tr>
-            <th>Blau</th>
-            <th>Gelb</th>
-            <th>Blau</th>
-            <th>Gelb</th>
+            <th>blau</th>
+            <th>gelb</th>
+            <th>blau</th>
+            <th>gelb</th>
           </tr>
         </thead>
         <tbody id="groupsBody"></tbody>
@@ -277,10 +277,10 @@ thead th:first-child {
 
       const max = Math.max(...totals, 1);
 
-      chartBag1.appendChild(createBar(totals[0], 'Blau', 'blue', max));
-      chartBag1.appendChild(createBar(totals[1], 'Gelb', 'yellow', max));
-      chartBag2.appendChild(createBar(totals[2], 'Blau', 'blue', max));
-      chartBag2.appendChild(createBar(totals[3], 'Gelb', 'yellow', max));
+      chartBag1.appendChild(createBar(totals[0], 'blau', 'blue', max));
+      chartBag1.appendChild(createBar(totals[1], 'gelb', 'yellow', max));
+      chartBag2.appendChild(createBar(totals[2], 'blau', 'blue', max));
+      chartBag2.appendChild(createBar(totals[3], 'gelb', 'yellow', max));
     }
 
     function renderTable(groups) {
