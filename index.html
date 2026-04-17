@@ -126,7 +126,7 @@
         </div>
         <div>
           <label for="groupName">Gruppennummer</label>
-          <input id="groupName" type="text" placeholder="1" />
+          <input id="groupName" type="number" min="1" step="1" placeholder="1" />
         </div>
     <br>
       </div>
@@ -172,20 +172,20 @@
     const ids = ['n1','n2','n3','n4'];
     
     ids.forEach(id => {
-  const input = document.getElementById(id);
+    const input = document.getElementById(id);
 
-  input.addEventListener('focus', () => {
-    if (input.value === '0') {
-      input.value = '';
-    }
-  });
+    input.addEventListener('focus', () => {
+      if (input.value === '0') {
+        input.value = '';
+        }
+    });
 
-  input.addEventListener('blur', () => {
-    if (input.value === '') {
-      input.value = '0';
-    }
-  });
-});
+    input.addEventListener('blur', () => {
+      if (input.value === '') {
+        input.value = '0';
+      }
+     });
+    });
 
     const message = document.getElementById('message');
     const saveBtn = document.getElementById('saveBtn');
@@ -206,6 +206,12 @@
     saveBtn.addEventListener('click', async () => {
       const lessonCode = lessonCodeInput.value.trim().toLowerCase();
       const groupName = groupNameInput.value.trim();
+
+      if (!/^\d+$/.test(groupName)) {
+        showMessage('Bitte gebt eine gültige Gruppennummer (nur Zahlen) ein.', 'warn');
+        return;
+      }
+
       const counts = getCounts();
       const total = counts.reduce((a, b) => a + b, 0);
 
@@ -225,12 +231,7 @@
       saveBtn.disabled = true;
       saveBtn.textContent = 'Speichert ...';
 
-      const groupKey = groupName
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
+      const groupKey = groupName;
 
      if (!groupKey) {
         showMessage('Bitte gebt eine gültige Gruppennummer ein.', 'warn');

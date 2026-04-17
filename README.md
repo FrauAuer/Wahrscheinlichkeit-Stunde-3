@@ -1,102 +1,81 @@
-# 📊 Wie oft ziehst du welche Farbe?
+# 🎲 Zufallsexperiment – Farben ziehen (Firebase Web-App)
 
-Eine interaktive Webanwendung zur Erfassung und Auswertung von Zufallsexperimenten im Mathematikunterricht (Grundschule, Klasse 4).
-
----
-
-## ✨ Funktionen
-
-### 👩‍🎓 Schüleransicht (`index.html`)
-- Eingabe von:
-  - Passwort (Unterrichtscode)
-  - Gruppennummer
-  - Anzahl gezogener Farben (blau/gelb, zwei Beutel)
-- Automatische Validierung der Eingaben
-- Speicherung der Ergebnisse in Firebase
-- Benutzerfreundliche Eingabe (z. B. automatische Entfernung der „0“)
+Diese Web-App ermöglicht es Schülergruppen, ihre Ergebnisse aus einem Zufallsexperiment (Farben ziehen) einzugeben und zentral auszuwerten.
+Die Daten werden in einer Firebase Realtime Database gespeichert und live im Dashboard visualisiert.
 
 ---
 
-### 👩‍🏫 Lehrkraftansicht (`dashboard.html`)
-- Übersicht aller Gruppen
-- Echtzeit-Aktualisierung
-- Darstellung als:
-  - Tabelle
-  - Säulendiagramme
-- Anzeige der Gesamtanzahl der Gruppen
+## 📌 Funktionen
+
+### 📝 Eingabeseite (index.html)
+- Eingabe von Passwort, Gruppennummer und Ziehungen
+- Nur Zahlen bei Gruppennummer erlaubt
+- 0 verschwindet beim Anklicken automatisch
+- Leere Felder werden wieder zu 0 gesetzt
+- Speicherung in Firebase
+
+### 📊 Dashboard (dashboard.html)
+- Anzeige aller Gruppen-Ergebnisse
+- Automatische Live-Aktualisierung
+- Tabelle + Säulendiagramme
+- Numerische Sortierung der Gruppen
+
+### 🔥 Firebase
+- Realtime Database
+- Zentrale Datenspeicherung
+- Live-Synchronisation
 
 ---
 
-### ☁️ Datenbank (Firebase)
-- Nutzung der Firebase Realtime Database
-- Datenstruktur:
-  ```
-  Stunde3/{lessonCode}/groups/{groupKey}
-  ```
+## 🗂️ Projektstruktur
+
+projektordner/
+│── index.html
+│── dashboard.html
+│── firebase-config.js
 
 ---
 
-## 🧠 Didaktischer Einsatz
+## ⚙️ Einrichtung
 
-Die Anwendung unterstützt:
-- handlungsorientiertes Lernen
-- eigenständige Datenerhebung
-- Vergleich von Wahrscheinlichkeiten
-- Reflexion über Zufall und Häufigkeiten
+1. Firebase-Projekt erstellen
+2. Realtime Database aktivieren
+3. firebase-config.js mit eigenen Daten füllen
 
 ---
 
-## 🚀 Installation & Nutzung
+## ▶️ Nutzung
 
-### 1. Voraussetzungen
-- Firebase-Projekt
-- aktivierte Realtime Database
-- Webhosting (z. B. Firebase Hosting)
+### Schüler:
+1. index.html öffnen
+2. Passwort eingeben
+3. Gruppennummer eintragen
+4. Ergebnisse eingeben
+5. senden
 
----
-
-### 2. Firebase konfigurieren
-Trage deine Firebase-Daten in die Datei `firebase-config.js` ein.
-
----
-
-### 3. Projekt starten
-- `index.html` → für Schülerinnen und Schüler
-- `dashboard.html` → für Lehrkraft
-
-Optional mit URL-Parameter:
-index.html?lesson=33
-dashboard.html?lesson=33
+### Lehrkraft:
+1. dashboard.html öffnen
+2. Passwort eingeben
+3. Ergebnisse live sehen
 
 ---
 
-## 🔒 Datenschutz
+## ⚠️ Hinweise
 
-- Es werden keine personenbezogenen Daten gespeichert
-- Gruppennamen sollten anonym gewählt werden
-
----
-
-## ⚙️ Technik
-
-- HTML, CSS, JavaScript (ES Modules)
-- Firebase SDK
-- Echtzeit-Daten mit `onValue()`
+- Gruppennummer nur Zahlen
+- Gruppen überschreiben eigene Daten
+- Internet notwendig
 
 ---
 
-## 🛠️ Erweiterungen (optional)
+## 🚀 Erweiterung
 
 - Weitere Farben
-- Prozentuale Auswertung
-- Exportfunktion (CSV / PDF)
-- Erweiterte Diagramme
+- CSV Export
+- Weitere Stunden (z.B. Stunde4)
 
 ---
 
-## 👩‍🏫 Kontext
+## 👩‍🏫 Einsatz
 
-Entwickelt für die Unterrichtseinheit:
-
-**„Gewinnwahrscheinlichkeiten auf dem Jahrmarkt“**  
-(Mathematik, Klasse 4)
+Grundschule – Mathematik – Wahrscheinlichkeit
